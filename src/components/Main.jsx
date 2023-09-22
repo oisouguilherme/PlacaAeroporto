@@ -3,20 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import { spring } from "react-flip-toolkit";
 import { Firestore } from "../utils/firebase";
 import Mock from "./nomes.json";
-import './AirportScoreboard.css';
-import AirportScoreboard from "./AirportScoreboard";
 
+import audio from "../assets/airport.mp3"
 
 export function Main() {
   const [letras, setLetras] = useState(Mock);
+
   const containerRef = useRef(null);
 
-  const scoreboardData = [
-    { flight: 'AA123', status: 'Departed' },
-    { flight: 'DL456', status: 'Boarding' },
-    { flight: 'UA789', status: 'Delayed' },
-    // Adicione mais dados conforme necessário
-  ];
+  const audioRef = useRef(null);
+
 
   useEffect(() => {
     Firestore.collection('placar')
@@ -29,10 +25,17 @@ export function Main() {
             ...valores,
           });
         });
+        playAudio();
         dataRegistros(results[0]);
         efeito();
       });
   }, []);
+
+  const playAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
 
   function efeito() {
     const squares = [...containerRef.current.querySelectorAll(".square")];
@@ -92,8 +95,6 @@ export function Main() {
     return valorTratado;
   }
 
-
-
   return (
     <div className="bg-[#1a1a1a] h-screen">
       <header className="bg-[#292a2e] text-7xl font-bold text-[#fbcb2b] flex justify-between text-center py-20 px-12">
@@ -124,6 +125,7 @@ export function Main() {
           </div>
         </div>
       </main>
-    </div>
+      <audio ref={audioRef} src={audio} autoPlay></audio>
+    </div >
   );
 }

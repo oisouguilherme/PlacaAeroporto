@@ -102,7 +102,7 @@ export function Admin() {
                 placeholder="Exemplo ( 12:30 )"
                 value={letras.horarios[5]}
                 maxLength={5}
-                onChange={(e) => setLetras({ ...letras })}
+                onChange={(e) => changeHorario(5, e.target.value)}
               />
             </div>
             <div className=" flex flex-col gap-2">
@@ -167,7 +167,7 @@ export function Admin() {
                 className="bg-zinc-50 rounded-lg py-2 px-4"
                 placeholder="Número do Ticket (max: 6 caracteres)"
                 value={letras.ticket[0]}
-                maxLength={5}
+                maxLength={6}
                 onChange={(e) => changeTicket(0, e.target.value)}
               />
               <input
@@ -175,7 +175,7 @@ export function Admin() {
                 className="bg-zinc-50 rounded-lg py-2 px-4"
                 placeholder="Número do Ticket (max: 6 caracteres)"
                 value={letras.ticket[1]}
-                maxLength={5}
+                maxLength={6}
                 onChange={(e) => changeTicket(1, e.target.value)}
               />
               <input
@@ -183,7 +183,7 @@ export function Admin() {
                 className="bg-zinc-50 rounded-lg py-2 px-4"
                 placeholder="Número do Ticket (max: 6 caracteres)"
                 value={letras.ticket[2]}
-                maxLength={5}
+                maxLength={6}
                 onChange={(e) => changeTicket(2, e.target.value)}
               />
               <input
@@ -191,7 +191,7 @@ export function Admin() {
                 className="bg-zinc-50 rounded-lg py-2 px-4"
                 placeholder="Número do Ticket (max: 6 caracteres)"
                 value={letras.ticket[3]}
-                maxLength={5}
+                maxLength={6}
                 onChange={(e) => changeTicket(3, e.target.value)}
               />
               <input
@@ -199,7 +199,7 @@ export function Admin() {
                 className="bg-zinc-50 rounded-lg py-2 px-4"
                 placeholder="Número do Ticket (max: 6 caracteres)"
                 value={letras.ticket[4]}
-                maxLength={5}
+                maxLength={6}
                 onChange={(e) => changeTicket(4, e.target.value)}
               />
               <input
@@ -207,7 +207,7 @@ export function Admin() {
                 className="bg-zinc-50 rounded-lg py-2 px-4"
                 placeholder="Número do Ticket (max: 6 caracteres)"
                 value={letras.ticket[5]}
-                maxLength={5}
+                maxLength={6}
                 onChange={(e) => changeTicket(5, e.target.value)}
               />
             </div>
