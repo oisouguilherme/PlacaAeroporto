@@ -10,9 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "esbuild": "^0.12.28",
+    "esbuild-wasm": "^0.19.3",
+    "firebase": "^8.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-flip-toolkit": "^7.1.0"
+    "react-flip-toolkit": "^7.1.0",
+    "react-router-dom": "^5.3.4",
+    "sass": "^1.68.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

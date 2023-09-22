@@ -1,0 +1,57 @@
+.main-admin {
+  background: rgb(55, 55, 55);
+  min-height: 100vh;
+  .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    .form-controll {
+      input {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  .actions {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    button {
+      background: white;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 0.5rem 3rem;
+    }
+  }
+}
+
+.main-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .box-login {
+    background: #fff;
+    padding: 1rem;
+    h2 {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    input {
+      border: solid 1px black;
+      display: block;
+      min-width: 500px;
+      padding: 0.5rem;
+      margin: 1rem 0;
+    }
+    button {
+      background: blue;
+      width: 100%;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 0.5rem 3rem;
+    }
+  }
+}

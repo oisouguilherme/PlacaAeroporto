@@ -1,10 +1,15 @@
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Main } from "./components/Main";
+import { Admin } from "./components/page/Admin";
 
 function App() {
   return (
-    <div className="bg-[#1a1a1a] h-screen">
-      <Main />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Main} />
+        <Route path="/admin" component={Admin} />
+      </Switch>
+    </Router>
   );
 }
 
