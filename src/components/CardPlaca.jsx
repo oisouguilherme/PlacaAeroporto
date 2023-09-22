@@ -5,7 +5,6 @@ export function CardPlaca({ data }) {
   const [intervalAnimateControll, setintervalAnimateControll] = useState(false);
 
   useEffect(() => {
-    // const randontimeAnimate = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
     const randontimeAnimate = Math.floor(Math.random() * (120000 - 30000 + 1)) + 30000;
     setInterval(() => {
       setintervalAnimateControll(true)
