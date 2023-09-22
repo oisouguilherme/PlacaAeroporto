@@ -2,12 +2,22 @@ import { CardPlaca } from "./CardPlaca";
 import { useEffect, useRef, useState } from "react";
 import { spring } from "react-flip-toolkit";
 import { Firestore } from "../utils/firebase";
-import Mock from "./nomes.json"; // Importe o JSON fictício
+import Mock from "./nomes.json";
+import './AirportScoreboard.css';
+import AirportScoreboard from "./AirportScoreboard";
 
 
 export function Main() {
   const [letras, setLetras] = useState(Mock);
   const containerRef = useRef(null);
+
+  const scoreboardData = [
+    { flight: 'AA123', status: 'Departed' },
+    { flight: 'DL456', status: 'Boarding' },
+    { flight: 'UA789', status: 'Delayed' },
+    // Adicione mais dados conforme necessário
+  ];
+
   useEffect(() => {
     Firestore.collection('placar')
       .onSnapshot(async (snap) => {
@@ -82,6 +92,8 @@ export function Main() {
     return valorTratado;
   }
 
+
+
   return (
     <div className="bg-[#1a1a1a] h-screen">
       <header className="bg-[#292a2e] text-7xl font-bold text-[#fbcb2b] flex justify-between text-center py-20 px-12">
@@ -96,31 +108,20 @@ export function Main() {
       <main className="bg-[#1a1a1a] flex gap-16 py-12 px-4" ref={containerRef}>
         <div className="w-[800px] flex flex-col justify-center items-center gap-8">
           <div className="flex flex-wrap gap-8">
-            {letras.horarios.map((letra) => (
-              letra.caracteres &&
-              letra.caracteres.map((e, index) => <CardPlaca key={index} letra={e} />)
-            ))}
+            {letras.horarios.map((data, index) => (<CardPlaca key={index} data={data} />))}
           </div>
         </div>
 
         <div className="w-[1900px] space-y-8">
-          {letras.ganhadores.map((letra) => (
-            <div className="flex flex-wrap gap-8 ">
-              {letra.caracteres && letra.caracteres.map((e, index) => (
-                <CardPlaca key={index} letra={e} />
-              ))}
-            </div>
-          ))}
+          <div className="flex flex-wrap gap-8 ">
+            {letras.ganhadores.map((data, index) => (<CardPlaca key={index} data={data} />))}
+          </div>
         </div>
 
         <div className="w-[950px] flex flex-col justify-center items-center gap-8">
-          {letras.ticket.map((letra) => (
-            <div className="flex flex-wrap gap-8 ">
-              {letra.caracteres && letra.caracteres.map((e, index) => (
-                <CardPlaca key={index} letra={e} />
-              ))}
-            </div>
-          ))}
+          <div className="flex flex-wrap gap-8 ">
+            {letras.ticket.map((data, index) => (<CardPlaca key={index} data={data} />))}
+          </div>
         </div>
       </main>
     </div>
