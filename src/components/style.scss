@@ -1,8 +1,10 @@
-.box-card{
+.box-card {
   background-size: 100% 100% !important;
   overflow: hidden;
+  p {
+    text-transform: uppercase;
+  }
 }
-
 
 .animar-placar {
   position: absolute;
@@ -24,7 +26,6 @@
     transform-origin: bottom center;
   }
 }
-
 
 // @keyframes placar {
 //   0% {
