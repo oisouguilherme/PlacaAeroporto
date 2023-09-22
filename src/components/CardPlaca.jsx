@@ -33,7 +33,7 @@ export function CardPlaca({ data }) {
     <>
       {data.caracteres && data.caracteres.map((e, indexCaracter) =>
         <>
-          <div key={indexCaracter} className={`box-card   bg-[url('/placa.png')] relative bg-contain bg-center bg-no-repeat w-32 h-60 text-[110px] text-white font-bold flex items-center justify-center square`} >
+          <div key={indexCaracter} className={`box-card   bg-[url('/placa.png')] relative bg-contain bg-center bg-no-repeat w-32 h-60 text-[110px] text-white font-bold flex items-center justify-center square uppercase`} >
             <p>{e}</p>
             {intervalAnimateControll && generateRandomCharArray(10).map((letraAleatoria, index) =>
               <div key={index} className={`box-card animar-placar bg-[url('/placa.png')] bg-contain bg-center bg-no-repeat w-32 h-60 text-[110px] text-white font-bold flex items-center justify-center square`}
