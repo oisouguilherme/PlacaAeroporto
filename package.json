@@ -13,6 +13,7 @@
   "dependencies": {
     "esbuild": "^0.12.28",
     "esbuild-wasm": "^0.19.3",
+    "exceljs": "^4.3.0",
     "firebase": "^8.1.2",
     "howler": "^2.2.4",
     "react": "^18.2.0",

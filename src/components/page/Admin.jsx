@@ -3,14 +3,48 @@ import Mock from "../nomes.json"; // Importe o JSON fictício
 import { useEffect, useState } from "react";
 import { Firestore } from "../../utils/firebase";
 
+import ExcelJS from "exceljs";
+
 export function Admin() {
   const [letras, setLetras] = useState(Mock);
   const [logado, setlogado] = useState(false);
   const [password, setpassword] = useState("");
+  const [registros, setregistros] = useState([]);
   useEffect(() => {
     // Firestore.collection('placar').doc('4fqdPaCl1fRk5r1IwPJG').set(Mock);
     getData();
+    getGanhadores();
   }, []);
+
+  async function getGanhadores() {
+    const user = await Firestore.collection("historicoGanhadores").get();
+    if (user?.docs?.length) {
+      let registro = [];
+      user.docs.forEach((element) => {
+        const save = { id: element.id, ...element.data() };
+        if (save.ticket !== '') {
+          registro.push(save);
+        }
+      });
+
+      registro.forEach(item => {
+        item.dataFormatada = formatarData(item.date)
+      });
+
+      setregistros(removeDuplicates(registro));
+    }
+  }
+
+  const removeDuplicates = (data) => {
+    const uniqueTickets = {};
+    data.forEach((item) => {
+      if (!uniqueTickets[item.ticket]) {
+        uniqueTickets[item.ticket] = true;
+      }
+    });
+    const filteredData = data.filter((item) => uniqueTickets[item.ticket]);
+    return filteredData;
+  };
 
   async function getData() {
     const user = await Firestore.collection("placar").get();
@@ -44,7 +78,46 @@ export function Admin() {
     const save = { ...letras };
     delete save.id;
     await Firestore.collection("placar").doc("4fqdPaCl1fRk5r1IwPJG").set(save);
+    for (let index = 0; index <= 5; index++) {
+      await Firestore.collection("historicoGanhadores").add({
+        ganhadores: save.ganhadores[index],
+        horario: save.horarios[index],
+        ticket: save.ticket[index],
+        date: new Date()
+      });
+
+    }
     alert("Registros salvos");
+  }
+
+  function formatarData(data) {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    return new Date(data.seconds * 1000).toLocaleDateString(undefined, options);
+  }
+
+  function exportToExcel() {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Registros");
+    worksheet.columns = [
+      { header: 'GANHADOR', key: 'ganhadores' },
+      { header: 'HORARIO', key: 'horario' },
+      { header: 'TICKET', key: 'ticket' },
+      { header: 'DATA DO REGISTRO', key: 'dataFormatada' },
+    ];
+
+    registros.forEach((item) => {
+      worksheet.addRow(item);
+    });
+
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "registros.xlsx";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
   }
 
   return (
@@ -218,6 +291,37 @@ export function Admin() {
               className="bg-[#fbcb2b] hover:bg-yellow-300 duration-300 w-full py-3 rounded-lg font-bold text-lg mt-12"
             >
               Salvar
+            </button>
+          </div>
+          <div className="p-10">
+            <table className="w-full border-collapse bg-yellow-200">
+              <thead>
+                <tr className="bg-yellow-500 text-white font-semibold">
+                  <th className="py-2 px-4">Ganhador</th>
+                  <th className="py-2 px-4">Horario</th>
+                  <th className="py-2 px-4">Ticket</th>
+                  <th className="py-2 px-4">Data do registro</th>
+                </tr>
+              </thead>
+              <tbody>
+                {registros.length && registros.map((e, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-yellow-100" : "bg-yellow-200"}
+                  >
+                    <td className="border py-2 px-4">{e.ganhadores}</td>
+                    <td className="border py-2 px-4">{e.horario}</td>
+                    <td className="border py-2 px-4">{e.ticket}</td>
+                    <td className="border py-2 px-4">{e.dataFormatada}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button
+              onClick={exportToExcel}
+              className="bg-[#fbcb2b] hover:bg-yellow-300 duration-300 w-full py-3 rounded-lg font-bold text-lg mt-12"
+            >
+              Fazer download
             </button>
           </div>
         </>
